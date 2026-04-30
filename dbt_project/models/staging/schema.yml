@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: opensky_raw
+    project: root-micron-435213-v0
+    dataset: Opensky
+    tables:
+      - name: opensky_data
+
+models:
+  - name: stg_flights
+    description: "Cleaned and typed flight states from OpenSky raw layer"
+    columns:
+      - name: icao24
+        description: "Unique ICAO aircraft identifier"
+        tests:
+          - not_null
+      - name: callsign
+        description: "Flight callsign, nullified if empty"
+      - name: origin_country
+        description: "Country of origin"

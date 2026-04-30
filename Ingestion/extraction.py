@@ -47,11 +47,11 @@ def transform_data(states):
 
     df = pd.DataFrame(states, columns=columns)
 
-    # ❌ drop problematic nested column
+    #  drop problematic nested column
     if "sensors" in df.columns:
         df = df.drop(columns=["sensors"])
 
-    # 🔥 convert numeric columns safely
+    #  convert numeric columns safely
     numeric_cols = [
         "time_position", "last_contact", "longitude", "latitude",
         "baro_altitude", "velocity", "true_track",
@@ -61,7 +61,7 @@ def transform_data(states):
     for col in numeric_cols:
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    # 🔥 convert strings safely
+    #  convert strings safely
     df["icao24"] = df["icao24"].astype("string")
     df["callsign"] = df["callsign"].astype("string")
     df["origin_country"] = df["origin_country"].astype("string")
@@ -97,16 +97,16 @@ def load_to_bigquery(df):
 # MAIN PIPELINE
 # -----------------------------
 def main():
-    print("🚀 Fetching OpenSky data...")
+    print("Fetching OpenSky data...")
     states = fetch_opensky_data()
 
-    print("🧹 Transforming data...")
+    print("Transforming data...")
     df = transform_data(states)
 
-    print("📦 Loading into BigQuery...")
+    print("Loading into BigQuery...")
     load_to_bigquery(df)
 
-    print("🎉 Done!")
+    print("Done!")
 
 
 # -----------------------------
